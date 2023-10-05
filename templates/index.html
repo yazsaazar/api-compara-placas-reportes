@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Runner</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #800699; /* Lavender (lavanda) */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        h1 {
+            color: #ffffff; /* Morado */
+        }
+
+        #output {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            max-width: 600px;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vehiculos identificados</h1>
+    <div id="output"></div>
+
+    <script>
+        // Conectar al servidor de eventos para recibir la salida del script
+        var eventSource = new EventSource("/output");
+
+        // Manejar eventos de mensajes del servidor de eventos
+        eventSource.onmessage = function(event) {
+            // Mostrar el mensaje en el div de salida
+            document.getElementById("output").innerHTML += event.data + "<br>";
+        };
+
+        // Manejar eventos de error del servidor de eventos
+        eventSource.onerror = function(event) {
+            // Mostrar mensajes de error en el div de salida
+            document.getElementById("output").innerHTML += "Error de servidor de eventos.<br>";
+        };
+
+        // Cerrar la conexión cuando la ventana se cierra
+        window.onbeforeunload = function() {
+            eventSource.close();
+        };
+    </script>
+</body>
+</html>
