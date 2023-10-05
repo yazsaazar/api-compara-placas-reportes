@@ -38,10 +38,10 @@ def main_demo(cfg, demo=True, benchmark=True, save_vid=False):
 
     # Establece la conexión a la base de datos MySQL en XAMPP
     db_connection = mysql.connector.connect(
-        host="localhost",
+        host="containers-us-west-127.railway.app",
         user="root",
-        password="",
-        database="api_flask"
+        password="Ns68awzE6RkGk1oNKy8C",
+        database="railway"
     )
 
     cursor = db_connection.cursor()
